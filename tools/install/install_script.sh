@@ -1,5 +1,5 @@
 #! /bin/bash
-echo "Software Install Script for Ubuntu 24.04"
+echo "Software Install Script for Ubuntu 25.04"
 echo "Author: Rickie Karp"
 
 idx=0
@@ -57,9 +57,9 @@ install_software()
 	sudo apt update
 	sudo apt install yandex-browser-stable
 	
-	snap install keepassxc telegram-desktop discord steam
+	snap install keepassxc telegram-desktop discord steam remmina
 	snap install --classic sublime-text intellij-idea-community
-	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio gnome-shell-extension-manager easytag remmina unrar simple-scan darktable rawtherapee
+	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio gnome-shell-extension-manager easytag unrar simple-scan darktable rawtherapee
 
 	# install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
 	sudo apt install -y libfuse2t64
