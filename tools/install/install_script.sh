@@ -58,7 +58,8 @@ install_software()
 	sudo apt install yandex-browser-stable
 	
 	snap install keepassxc telegram-desktop discord steam remmina
-	snap install --classic sublime-text intellij-idea-community
+	snap install --classic sublime-text
+	snap install --classic intellij-idea-community
 	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio gnome-shell-extension-manager easytag unrar simple-scan darktable rawtherapee
 
 	# install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
