@@ -39,7 +39,7 @@ select_option()
 uninstall_software()
 {
 	echo "Uninstalling not needed software..."
-	sudo apt-get --purge remove -y rhythmbox rhythmbox-data librhythmbox-core10
+	sudo apt-get --purge remove -y rhythmbox rhythmbox-data librhythmbox-core10 remmina
 	snap remove thunderbird
 
 	sudo apt -y autoremove	#removes packages that were installed by other packages and are no longer needed
