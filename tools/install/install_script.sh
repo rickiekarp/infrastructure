@@ -59,8 +59,9 @@ install_software()
 	
 	snap install keepassxc telegram-desktop discord steam remmina
 	snap install --classic sublime-text
-	snap install --classic intellij-idea-community
-	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio gnome-shell-extension-manager easytag unrar simple-scan darktable rawtherapee
+	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio \
+		gnome-shell-extension-manager easytag unrar simple-scan virtualbox virtualbox-qt \
+		darktable rawtherapee
 
 	# install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
 	sudo apt install -y libfuse2t64
@@ -74,7 +75,7 @@ install_software()
 install_dev_software()
 {
 	echo "Installing development software..."
-	sudo apt install -y git openjdk-21-jdk virtualbox virtualbox-qt adb
+	sudo apt install -y git openjdk-21-jdk adb
 
 	# required for go compiling
 	sudo apt install -y gcc-aarch64-linux-gnu
@@ -83,8 +84,9 @@ install_dev_software()
 	sudo apt install -y docker.io docker-compose
 	sudo usermod -a -G docker $USER
 
-	# Install Visual Studio Code
+	# Install IDEs
 	snap install --classic code
+	snap install --classic intellij-idea-community
 
 	check_process_exit
 }
@@ -153,5 +155,3 @@ process_exit()
 
 print_options
 select_option
-
-

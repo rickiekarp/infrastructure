@@ -136,11 +136,7 @@ function compressArchive() {
 		        if [[ "$dir" == *"/"* ]]; then
 		            mkdir -p $backupTarget/$line/$(dirname $dir)
 		            tar -zcvf $backupTarget/$line/$dir.$compressionFormat $(dirname $files); 
-                    tar -zcvf $backupTarget/$line/$dir.$compressionFormat $(dirname $files); 
-		            tar -zcvf $backupTarget/$line/$dir.$compressionFormat $(dirname $files); 
 		        else
-		            tar -zcvf $backupTarget/$line/$(dirname $files).$compressionFormat $(dirname $files); 
-                    tar -zcvf $backupTarget/$line/$(dirname $files).$compressionFormat $(dirname $files); 
 		            tar -zcvf $backupTarget/$line/$(dirname $files).$compressionFormat $(dirname $files); 
 		        fi
 		    done
