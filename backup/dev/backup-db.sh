@@ -13,15 +13,20 @@ docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --rou
 # --------------------------
 # compress database backups
 # --------------------------
-tar -zcvf backup.tar.xz data/*; 
+tar cJPf ./data/dumps.tar.xz ./data/*.sql
+rm ./data/*.sql
+
+# --------------------------
+# encrypt database backups
+# --------------------------
+gpg --output ./data/dumps.tar.xz.gpg --encrypt --recipient rickie.karp@yandex.com ./data/dumps.tar.xz
 
 # --------------------------
 # sync database backups
 # --------------------------
-rsync -rlvpt backup.tar.xz pi:/mnt/raid2/development/backups/database/
+rsync -rlvpt ./data/dumps.tar.xz.gpg pi:/mnt/raid2/archive/database/development/
 
 # --------------------------
 # remove database backups
 # --------------------------
-rm backup.tar.xz
 rm -rf data

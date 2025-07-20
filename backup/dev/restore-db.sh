@@ -5,15 +5,20 @@ mkdir data
 # --------------------------
 # sync database backups
 # --------------------------
-rsync -rlvpt pi:/mnt/raid2/development/backups/database/backup.tar.xz data/
+rsync -rlvpt pi:/mnt/raid2/archive/database/development/dumps.tar.xz.gpg data/
+
+# --------------------------
+# decrypt database backups
+# --------------------------
+gpg --output ./data/dumps.tar.xz --decrypt ./data/dumps.tar.xz.gpg
 
 # --------------------------
 # extract dump
 # --------------------------
-tar -xvf data/backup.tar.xz
+tar -xvf data/dumps.tar.xz
 
 # --------------------------
-# create database backups
+# restore database backups
 # --------------------------
 docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/login.sql
 docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/nexus.sql
