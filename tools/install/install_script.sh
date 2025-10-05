@@ -1,6 +1,5 @@
 #! /bin/bash
-echo "Software Install Script for Ubuntu 25.04"
-echo "Author: Rickie Karp"
+echo "Software Install Script for Ubuntu 25.10"
 
 idx=0
 
@@ -11,9 +10,10 @@ print_options()
 	echo "2: Uninstall redundant software"
 	echo "3: Install software"
 	echo "4: Install development software"
-	echo "5: Install games"
-	echo "6: Check for software updates"
-	echo "7: Exit"
+	echo "5: Configure development environment"
+	echo "6: Install games"
+	echo "7: Check for software updates"
+	echo "8: Exit"
 }
 
 # main option selection
@@ -23,13 +23,14 @@ select_option()
 	read INDEX
 
 	case $INDEX in
-		1) do_all ;;
+		1) express_install ;;
 		2) uninstall_software ;;
 		3) install_software ;;
 		4) install_dev_software ;;
-		5) install_games ;;
-		6) check_for_updates ;;
-		7) exit ;;
+		5) configure_dev_environment ;;
+		6) install_games ;;
+		7) check_for_updates ;;
+		8) exit ;;
 
 		*) echo "INVALID NUMBER!" ;;
 	esac
@@ -42,7 +43,8 @@ uninstall_software()
 	sudo apt-get --purge remove -y rhythmbox rhythmbox-data librhythmbox-core10 remmina
 	snap remove thunderbird
 
-	sudo apt -y autoremove	#removes packages that were installed by other packages and are no longer needed
+	# removes packages that were installed by other packages and are no longer needed
+	sudo apt -y autoremove	
 
 	check_process_exit
 }
@@ -51,22 +53,23 @@ uninstall_software()
 install_software()
 {
 	echo "Installing software..."
+
 	# install browser
 	echo deb [arch=amd64 signed-by=/usr/share/keyrings/yandex.gpg] http://repo.yandex.ru/yandex-browser/deb stable main | sudo tee /etc/apt/sources.list.d/yandex-stable.list
 	sudo wget -O- https://repo.yandex.ru/yandex-browser/YANDEX-BROWSER-KEY.GPG | gpg --dearmor | sudo tee /usr/share/keyrings/yandex.gpg
 	sudo apt update
-	sudo apt install yandex-browser-stable
+	sudo apt install -y yandex-browser-stable
 	
-	snap install keepassxc telegram-desktop discord steam remmina
+	# install other software
+	snap install keepassxc telegram-desktop discord steam remmina xournalpp
 	snap install --classic sublime-text
 	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio \
 		gnome-shell-extension-manager easytag unrar simple-scan virtualbox virtualbox-qt \
 		darktable rawtherapee
 
-	# install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
-	sudo apt install -y libfuse2t64
-	# virtual camera support
-	sudo apt install -y v4l2loopback-dkms
+	# libfuse2t64: 			install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
+	# v4l2loopback-dkms: 	virtual camera support
+	sudo apt install -y libfuse2t64 v4l2loopback-dkms
 	
 	check_process_exit
 }
@@ -91,6 +94,21 @@ install_dev_software()
 	check_process_exit
 }
 
+# configures development setup
+configure_dev_environment()
+{
+	echo "Configuring development setup..."
+	echo '127.0.0.1 database' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 api.rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 git.rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 cloud.rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 files.rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 test.rickiekarp.net' | sudo tee -a /etc/hosts
+
+	check_process_exit
+}
+
 # installs games from default repository
 install_games()
 {
@@ -101,7 +119,7 @@ install_games()
 }
 
 # easy install function
-do_all()
+express_install()
 {
 	read -r -p "This option will execute all other listed functions. Continue? [y/n]" response
 	case $response in 
@@ -111,7 +129,7 @@ do_all()
 		check_for_updates
 		install_software
 		install_dev_software
-		install_games
+		configure_dev_environment
 		echo "DONE!"
 	        ;;
 	   *)
