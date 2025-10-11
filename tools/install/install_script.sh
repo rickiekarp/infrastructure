@@ -6,11 +6,10 @@ idx=0
 # main option selection
 print_options()
 {
-	echo "1: Easy Install (All options)"
+	echo "1: Express Install (Recommended)"
 	echo "2: Uninstall redundant software"
 	echo "3: Install software"
-	echo "4: Install development software"
-	echo "5: Configure development environment"
+	echo "5: Configure system files"
 	echo "6: Install games"
 	echo "7: Check for software updates"
 	echo "8: Exit"
@@ -26,11 +25,10 @@ select_option()
 		1) express_install ;;
 		2) uninstall_software ;;
 		3) install_software ;;
-		4) install_dev_software ;;
-		5) configure_dev_environment ;;
-		6) install_games ;;
-		7) check_for_updates ;;
-		8) exit ;;
+		4) configure_system ;;
+		5) install_games ;;
+		6) check_for_updates ;;
+		7) exit ;;
 
 		*) echo "INVALID NUMBER!" ;;
 	esac
@@ -70,34 +68,26 @@ install_software()
 	# libfuse2t64: 			install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
 	# v4l2loopback-dkms: 	virtual camera support
 	sudo apt install -y libfuse2t64 v4l2loopback-dkms
+
+	echo "Installing development software..."
+	sudo apt install -y git openjdk-21-jdk adb
+	# required for go compiling
+	sudo apt install -y gcc-aarch64-linux-gnu
+	# Install Docker
+	sudo apt install -y docker.io docker-compose
+	sudo usermod -a -G docker $USER
+	# Install IDEs
+	snap install --classic code
+	snap install --classic intellij-idea-community
 	
 	check_process_exit
 }
 
-# installs development related software from default repository
-install_dev_software()
-{
-	echo "Installing development software..."
-	sudo apt install -y git openjdk-21-jdk adb
-
-	# required for go compiling
-	sudo apt install -y gcc-aarch64-linux-gnu
-
-	# Install Docker
-	sudo apt install -y docker.io docker-compose
-	sudo usermod -a -G docker $USER
-
-	# Install IDEs
-	snap install --classic code
-	snap install --classic intellij-idea-community
-
-	check_process_exit
-}
-
 # configures development setup
-configure_dev_environment()
+configure_system()
 {
 	echo "Configuring development setup..."
+	echo "Setting /etc/hosts..."
 	echo '127.0.0.1 database' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 api.rickiekarp.net' | sudo tee -a /etc/hosts
@@ -105,6 +95,16 @@ configure_dev_environment()
 	echo '192.168.178.22 cloud.rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 files.rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 test.rickiekarp.net' | sudo tee -a /etc/hosts
+
+	echo "Setting desktop shortcuts..."
+	cat >/home/rickie/.local/share/applications/shapass.desktop <<EOL
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=SHAPass
+Exec="/home/rickie/Programs/shapass/bin/shapass" %U
+Categories=Application;
+EOL
 
 	check_process_exit
 }
@@ -128,8 +128,7 @@ express_install()
 		uninstall_software
 		check_for_updates
 		install_software
-		install_dev_software
-		configure_dev_environment
+		configure_system
 		echo "DONE!"
 	        ;;
 	   *)
