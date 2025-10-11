@@ -62,7 +62,7 @@ install_software()
 	snap install keepassxc telegram-desktop discord steam remmina xournalpp
 	snap install --classic sublime-text
 	sudo apt install -y guake vlc bleachbit gimp vim curl ffmpeg timeshift obs-studio \
-		gnome-shell-extension-manager easytag unrar simple-scan virtualbox virtualbox-qt \
+		gnome-shell-extension-manager easytag unrar simple-scan virtualbox \
 		darktable rawtherapee
 
 	# libfuse2t64: 			install FUSE to export a virtual filesystem to linux kernel (for e.g. AppImage)
