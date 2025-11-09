@@ -6,7 +6,7 @@ workdir=`pwd`
 echo "User name: $user"
 echo "Working directory: $workdir"
 
-driveA="/media/rickie/archive1/"
+driveA="/run/media/rickie/archive1/"
 if [ -d "$driveA" ]; then
   echo "Starting backup to $driveA!"
   rsync -rlvpt --delete \
