@@ -90,11 +90,11 @@ configure_system()
 	echo "Setting /etc/hosts..."
 	echo '127.0.0.1 database' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 admin.rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 api.rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 git.rickiekarp.net' | sudo tee -a /etc/hosts
 	echo '192.168.178.22 cloud.rickiekarp.net' | sudo tee -a /etc/hosts
-	echo '192.168.178.22 files.rickiekarp.net' | sudo tee -a /etc/hosts
-	echo '192.168.178.22 test.rickiekarp.net' | sudo tee -a /etc/hosts
+	echo '192.168.178.22 cdn.rickiekarp.net' | sudo tee -a /etc/hosts
 
 	echo "Setting desktop shortcuts..."
 	cat >/home/rickie/.local/share/applications/shapass.desktop <<EOL
