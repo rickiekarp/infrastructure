@@ -13,7 +13,7 @@ if [ -d "$driveA" ]; then
     --exclude 'applications/gitea' \
     --exclude 'applications/graphite' \
     --exclude 'applications/mysql' \
-    --exclude 'applications/nginx' \
+    --exclude 'applications/nginx/logs' \
     --exclude 'nodes' \
     --exclude 'projects' \
     root@pi:/mnt/raid2/* \
