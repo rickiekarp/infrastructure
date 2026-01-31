@@ -1,8 +1,9 @@
 #!/bin/bash
-echo "Raspberry Pi Backup Script v1.5"
+echo "Raspberry Pi Backup Script"
 
 backupdate=$(date +%Y%m%d)
 outputfile="backup.img"
+filetype="tar.xz"
 device="/dev/sdb"
 bootpartition=$device"1"
 rootpartition=$device"2"
@@ -17,6 +18,7 @@ sudo umount $rootpartition
 if df -h | grep $device
 then
   echo "Device $device was not unmounted correctly"
+  exit 1
 else
   echo "Backing up! Please wait..."
   sudo dd if=$device of=$outputfile bs=1M status=progress
@@ -27,16 +29,16 @@ echo "Backup created! You can remove the sdcard now!"
 
 mkdir -p $backupdate
 echo "Compressing backup, please wait!"
-tar -cJvf $backupdate/$outputfile.tar.xz $outputfile
+tar -cJvf $backupdate/$outputfile.$filetype $outputfile
 
 echo "Encrypting backup..."
-gpg --output $backupdate/$outputfile.tar.xz.gpg \
+gpg --output $backupdate/$outputfile.$filetype.gpg \
     --encrypt \
     --recipient $DEFAULT_EMAIL  \
-    $backupdate/$outputfile.tar.xz
+    $backupdate/$outputfile.$filetype
 
 echo "Removing $outputfile"
 rm $outputfile
 
-echo "Removing unencrypted backup $backupdate/$outputfile.tar.xz"
-rm $backupdate/$outputfile.tar.xz
+echo "Removing unencrypted backup $backupdate/$outputfile.$filetype"
+rm $backupdate/$outputfile.$filetype

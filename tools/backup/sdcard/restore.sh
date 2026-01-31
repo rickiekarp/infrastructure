@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Raspberry Pi Install Script v1.1"
+echo "Raspberry Pi Backup Script"
 
 device="/dev/sdb"
 bootpartition="/dev/sdb1"
@@ -26,4 +26,4 @@ sudo mkdosfs -I -F32 $device
 
 echo "Restoring backup! Please wait..."
 sudo dd if=$backupfile of=$device
-
+date -ud "@$SECONDS" "+Time elapsed: %H:%M:%S"
