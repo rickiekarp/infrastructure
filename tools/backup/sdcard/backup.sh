@@ -1,10 +1,15 @@
 #!/bin/bash
 echo "Raspberry Pi Backup Script"
 
+if [ "$EUID" -eq 0 ]; then
+    echo "This script must NOT be run as root."
+    exit 1
+fi
+
 backupdate=$(date +%Y%m%d)
 outputfile="backup.img"
 filetype="tar.xz"
-device="/dev/sdb"
+device="/dev/sdd"
 bootpartition=$device"1"
 rootpartition=$device"2"
 echo "Backing up partitions: $bootpartition, $rootpartition"
@@ -34,11 +39,17 @@ tar -cJvf $backupdate/$outputfile.$filetype $outputfile
 echo "Encrypting backup..."
 gpg --output $backupdate/$outputfile.$filetype.gpg \
     --encrypt \
-    --recipient $DEFAULT_EMAIL  \
+    --recipient $DEFAULT_EMAIL \
     $backupdate/$outputfile.$filetype
 
-echo "Removing $outputfile"
-rm $outputfile
+if [ $? -eq 0 ]; then
+    echo "Encryption successful."
 
-echo "Removing unencrypted backup $backupdate/$outputfile.$filetype"
-rm $backupdate/$outputfile.$filetype
+    echo "Removing $outputfile"
+    rm "$outputfile"
+    echo "Removing unencrypted backup $backupdate/$outputfile.$filetype"
+    rm "$backupdate/$outputfile.$filetype"
+else
+    echo "Encryption failed!"
+    exit 1
+fi
