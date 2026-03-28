@@ -21,7 +21,7 @@ tar -xvf data/dumps.tar.xz
 # restore database backups
 # --------------------------
 docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/login.sql
-docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/nexus.sql
+docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/yuvora.sql
 docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/storage.sql
 docker exec -i database mariadb --defaults-file="/home/defaults.cnf" < ./data/mysql.sql
 

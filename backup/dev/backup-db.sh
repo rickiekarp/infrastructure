@@ -14,7 +14,7 @@ mkdir data
 # --------------------------
 echo "Dumping databases"
 docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --routines --databases login > $dataDir/login.sql
-docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --routines --databases nexus > $dataDir/nexus.sql
+docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --routines --databases yuvora > $dataDir/yuvora.sql
 docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --routines --databases storage > $dataDir/storage.sql
 docker exec -it database mariadb-dump --defaults-file="/home/defaults.cnf" --routines --databases mysql > $dataDir/mysql.sql
 
