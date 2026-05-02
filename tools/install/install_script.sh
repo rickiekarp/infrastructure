@@ -1,5 +1,5 @@
 #! /bin/bash
-echo "Software Install Script for Ubuntu 25.10"
+echo "Software Install Script for Ubuntu 26.04"
 
 idx=0
 
@@ -79,6 +79,7 @@ install_software()
 	# Install IDEs
 	snap install --classic code
 	snap install --classic intellij-idea-community
+	snap install chromium chromium-ffmpeg
 	
 	check_process_exit
 }
