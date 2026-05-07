@@ -70,7 +70,7 @@ install_software()
 	sudo apt install -y libfuse2t64 v4l2loopback-dkms
 
 	echo "Installing development software..."
-	sudo apt install -y git openjdk-21-jdk adb
+	sudo apt install -y git openjdk-21-jdk adb npm
 	# required for go compiling
 	sudo apt install -y gcc-aarch64-linux-gnu
 	# Install Docker
