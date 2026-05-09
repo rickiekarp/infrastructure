@@ -9,7 +9,7 @@ fi
 backupdate=$(date +%Y%m%d)
 outputfile="backup.img"
 filetype="tar.xz"
-device="/dev/sdd"
+device="/dev/sdb"
 bootpartition=$device"1"
 rootpartition=$device"2"
 echo "Backing up partitions: $bootpartition, $rootpartition"
@@ -26,7 +26,7 @@ then
   exit 1
 else
   echo "Backing up! Please wait..."
-  sudo dd if=$device of=$outputfile bs=1M status=progress
+  sudo dd if=$device of=$outputfile bs=4M status=progress conv=fsync
   date -ud "@$SECONDS" "+Time elapsed: %H:%M:%S"
 fi
 
